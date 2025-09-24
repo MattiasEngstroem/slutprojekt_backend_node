@@ -16,4 +16,18 @@ router.get("/comics", async (req, res) => {
   }
 });
 
+router.get("/comics/:id", async (req, res) => {
+  try {
+    const { id } = req.params;
+    const comics = await comicService.getComicsById(Number(id));
+    res.json(comics);
+  } catch (error) {
+    console.error("Error fetching comics:", error.message);
+    res.status(500).json({
+      error: "Failed to fetch comics",
+      details: error.message,
+    });
+  }
+});
+
 export default router;
